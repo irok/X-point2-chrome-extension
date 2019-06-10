@@ -10,5 +10,9 @@
   "browser_action": {
     "default_icon": "/img/icon48.png",
     "default_title": "X-point2"
+  },
+  "options_ui": {
+    "page": "/html/options.html",
+    "open_in_tab": false
   }
 }
