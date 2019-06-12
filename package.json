@@ -1,0 +1,24 @@
+{
+  "name": "x-point2-chrome-extension",
+  "version": "0.1.0",
+  "description": "X-point2の自社向けChrome拡張です。",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/irok/X-point2-chrome-extension.git"
+  },
+  "keywords": [],
+  "author": "irok",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/irok/X-point2-chrome-extension/issues"
+  },
+  "homepage": "https://github.com/irok/X-point2-chrome-extension#readme",
+  "devDependencies": {
+    "webpack": "^4.33.0",
+    "webpack-cli": "^3.3.4"
+  }
+}
