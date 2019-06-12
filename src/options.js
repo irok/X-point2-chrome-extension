@@ -1,7 +1,7 @@
 import Credential from './credential';
 import storage from './storage';
 
-function save_options() {
+async function save_options() {
   const domCd= document.getElementById('domCd').value;
   const user= document.getElementById('user').value;
   const pass= document.getElementById('pass').value;
@@ -14,12 +14,12 @@ function save_options() {
   setTimeout(() => { status.textContent = ''; }, 3000);
 }
 
-function restore_options() {
-  const data = await Credential.retrieve(storage);
+async function restore_options() {
+  const crd = await Credential.retrieve(storage);
 
-  document.getElementById('domCd').value = data.domCd;
-  document.getElementById('user').value = data.user;
-  document.getElementById('pass').value = data.pass;
+  document.getElementById('domCd').value = crd.domCd;
+  document.getElementById('user').value = crd.user;
+  document.getElementById('pass').value = crd.pass;
 }
 
 document.addEventListener('DOMContentLoaded', restore_options);
