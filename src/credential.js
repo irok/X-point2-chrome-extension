@@ -1,25 +1,26 @@
+const defaultValues = {
+  domCd: '001',
+  user: '',
+  pass: ''
+};
+
 export default class Credential {
   static async retrieve(storage) {
-    // 取り出したいキー、及びデフォルト値（ストレージになかった時に返される）を渡す
-    const props = await storage.get({
-      domCd: '001',
-      user: '',
-      pass: ''
-    });
-
+    const props = await storage.get(defaultValues);
     return (new Credential(storage)).assign(props);
   }
 
   constructor(storage) {
     this.storage = storage;
-    this.props = {};
   }
 
-  assign(props) {
-    this.props = {...props};
+  assign({domCd, user, pass}) {
+    Object.assign(this, {domCd, user, pass});
+    return this;
   }
 
   async save() {
-    await this.storage.set(this.props);
+    const {domCd, user, pass} = this;
+    await this.storage.set({domCd, user, pass});
   }
 }
