@@ -5,6 +5,5 @@ module.exports = {
   output: {
     filename: 'options.js',
     path: path.resolve(__dirname, 'dist/js')
-  },
-  devtool: 'inline-source-map'
+  }
 };
