@@ -2,9 +2,9 @@ import Credential from './credential';
 import storage from './storage';
 
 async function save_options() {
-  const domCd= document.getElementById('domCd').value;
-  const user= document.getElementById('user').value;
-  const pass= document.getElementById('pass').value;
+  const domCd = document.getElementById('domCd').value;
+  const user = document.getElementById('user').value;
+  const pass = document.getElementById('pass').value;
 
   await (new Credential(storage)).assign({domCd, user, pass}).save();
 
@@ -15,11 +15,11 @@ async function save_options() {
 }
 
 async function restore_options() {
-  const crd = await Credential.retrieve(storage);
+  const crdnt = await Credential.retrieve(storage);
 
-  document.getElementById('domCd').value = crd.domCd;
-  document.getElementById('user').value = crd.user;
-  document.getElementById('pass').value = crd.pass;
+  document.getElementById('domCd').value = crdnt.domCd;
+  document.getElementById('user').value = crdnt.user;
+  document.getElementById('pass').value = crdnt.pass;
 }
 
 document.addEventListener('DOMContentLoaded', restore_options);
