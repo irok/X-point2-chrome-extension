@@ -16,6 +16,7 @@
     "open_in_tab": false
   },
   "permissions": [
+    "https://xpt.gmo-media.jp/",
     "storage"
   ]
 }
