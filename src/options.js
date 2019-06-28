@@ -11,7 +11,7 @@ async function save_options() {
   const crdt = (new Credential(storage)).assign({domCd, user, pass});
 
   try {
-    if (await login(crdt)) {
+    if (await login(crdt, {test: true})) {
       await crdt.save();
       status.textContent = '保存しました';
     } else {
