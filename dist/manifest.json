@@ -5,15 +5,19 @@
   "description": "X-point2の自社向けChrome拡張です。",
   "author": "irok",
   "icons": {
-    "48":  "/img/icon48.png"
+    "48":  "img/icon48.png"
+  },
+  "background": {
+    "scripts": ["js/background.js"],
+    "persistent": false
   },
   "browser_action": {
-    "default_icon": "/img/icon48.png",
+    "default_icon": "img/icon48.png",
     "default_title": "X-point2",
     "default_popup": "html/popup.html"
   },
   "options_ui": {
-    "page": "/html/options.html",
+    "page": "html/options.html",
     "open_in_tab": false
   },
   "permissions": [
