@@ -4,11 +4,12 @@ import storage from './storage';
 
 Object.assign(window, {
   credential: {
+    keys: ['domCd', 'user', 'pass'],
     load() {
       return Credential.retrieve(storage);
     },
-    create({domCd, user, pass}) {
-      return (new Credential(storage)).assign({domCd, user, pass});
+    create(data) {
+      return (new Credential(storage)).assign(data);
     }
   },
   login

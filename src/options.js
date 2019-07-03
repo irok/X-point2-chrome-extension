@@ -1,11 +1,10 @@
 function save_options() {
-  const status = document.getElementById('status');
-  const domCd = document.getElementById('domCd').value;
-  const user = document.getElementById('user').value;
-  const pass = document.getElementById('pass').value;
-
   chrome.runtime.getBackgroundPage(async ({credential, login}) => {
-    const crdt = credential.create({domCd, user, pass});
+    const data = Object.fromEntries(
+      credential.keys.map(key => [key, document.getElementById(key).value])
+    );
+    const crdt = credential.create(data);
+    const status = document.getElementById('status');
 
     try {
       if (await login(crdt, {test: true})) {
@@ -25,9 +24,9 @@ function restore_options() {
   chrome.runtime.getBackgroundPage(async ({credential}) => {
     const crdt = await credential.load();
 
-    document.getElementById('domCd').value = crdt.domCd;
-    document.getElementById('user').value = crdt.user;
-    document.getElementById('pass').value = crdt.pass;
+    for (let key of credential.keys) {
+      document.getElementById(key).value = crdt[key];
+    }
   });
 }
 
