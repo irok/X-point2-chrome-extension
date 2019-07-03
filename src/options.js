@@ -4,8 +4,8 @@ function save_options() {
   const user = document.getElementById('user').value;
   const pass = document.getElementById('pass').value;
 
-  chrome.runtime.getBackgroundPage(async ({Credential, storage, login}) => {
-    const crdt = (new Credential(storage)).assign({domCd, user, pass});
+  chrome.runtime.getBackgroundPage(async ({credential, login}) => {
+    const crdt = credential.create({domCd, user, pass});
 
     try {
       if (await login(crdt, {test: true})) {
@@ -22,8 +22,8 @@ function save_options() {
 }
 
 function restore_options() {
-  chrome.runtime.getBackgroundPage(async ({Credential, storage}) => {
-    const crdt = await Credential.retrieve(storage);
+  chrome.runtime.getBackgroundPage(async ({credential}) => {
+    const crdt = await credential.load();
 
     document.getElementById('domCd').value = crdt.domCd;
     document.getElementById('user').value = crdt.user;
