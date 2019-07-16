@@ -1,5 +1,5 @@
-function save_options() {
-  chrome.runtime.getBackgroundPage(async ({credential, login}) => {
+function saveOptions() {
+  chrome.runtime.getBackgroundPage(async ({credential, service}) => {
     const data = Object.fromEntries(
       credential.keys.map(key => [key, document.getElementById(key).value])
     );
@@ -7,7 +7,7 @@ function save_options() {
     const status = document.getElementById('status');
 
     try {
-      if (await login(crdt, {test: true})) {
+      if (await service.authenticate(crdt)) {
         await crdt.save();
         status.textContent = '保存しました';
       } else {
@@ -20,15 +20,14 @@ function save_options() {
   });
 }
 
-function restore_options() {
+function restoreOptions() {
   chrome.runtime.getBackgroundPage(async ({credential}) => {
     const crdt = await credential.load();
-
     for (let key of credential.keys) {
       document.getElementById(key).value = crdt[key];
     }
   });
 }
 
-document.addEventListener('DOMContentLoaded', restore_options);
-document.getElementById('save').addEventListener('click', save_options);
+document.addEventListener('DOMContentLoaded', restoreOptions);
+document.getElementById('save').addEventListener('click', saveOptions);

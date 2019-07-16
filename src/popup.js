@@ -1,12 +1,12 @@
-function open_xpoint() {
-  chrome.runtime.getBackgroundPage(async ({credential, login}) => {
+function openSite() {
+  chrome.runtime.getBackgroundPage(async ({credential, service}) => {
     try {
       const crdt = await credential.load();
-      await login(crdt);
+      await service.login(crdt);
     } catch(e) {}
 
-    window.open('https://xpt.gmo-media.jp/xpoint/login.jsp?login=site', '_blank');
+    service.openSite();
   });
 }
 
-document.getElementById('open').addEventListener('click', open_xpoint);
+document.getElementById('open').addEventListener('click', openSite);
