@@ -1,3 +1,5 @@
+const regexBookmarkParser = /<a href="javascript:openForm\('([^']+)','[^']+','(\d+)','(\d+)'\);" target="">(.+?)<\/a>/g;
+
 export default class Service {
   static url(pathname) {
     return `https://xpt.gmo-media.jp${pathname}`;
@@ -27,5 +29,21 @@ export default class Service {
 
   async authenticate(credential) {
     return await this.login(credential, {credentials: 'omit'});
+  }
+
+  async getBookmarkList() {
+    const text = await this._get('/xpoint/xpoint/front/portlet/bookmarkListPortlet.jsp');
+    const results = [];
+
+    let matches;
+    while ((matches = regexBookmarkParser.exec(text)) !== null) {
+      const [, pathname, width, height, title] = matches;
+      results.push({
+        pathname, width, height,
+        title: title.replace('（（自動選択ルート））', '')
+      });
+    }
+
+    return results;
   }
 }
