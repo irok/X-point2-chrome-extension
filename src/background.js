@@ -1,5 +1,6 @@
 import Credential from './credential';
-import login from './login';
+import Service from './service';
+import http from './http';
 import storage from './storage';
 
 Object.assign(window, {
@@ -12,5 +13,5 @@ Object.assign(window, {
       return (new Credential(storage)).assign(data);
     }
   },
-  login
+  service: new Service(http)
 });
