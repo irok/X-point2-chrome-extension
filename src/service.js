@@ -21,6 +21,10 @@ export default class Service {
     window.open(Service.url('/xpoint/login.jsp?login=site'), '_blank');
   }
 
+  openForm({pathname, width, height}) {
+    window.open(Service.url(pathname), '_blank', `left=0,top=0,height=${height},width=${width},resizable=yes,scrollbars=yes`);
+  }
+
   async login({domCd, user, pass, loginType = 0}, options = {}) {
     const data = {domCd, user, pass, loginType};
     const text = await this._post('/xpoint/login.do', data, options);
