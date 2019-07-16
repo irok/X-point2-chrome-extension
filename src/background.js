@@ -5,7 +5,7 @@ import storage from './storage';
 
 Object.assign(window, {
   credential: {
-    keys: ['domCd', 'user', 'pass'],
+    keys: Credential.keys,
     load() {
       return Credential.retrieve(storage);
     },

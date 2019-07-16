@@ -7,6 +7,10 @@ const defaultValues = {
 };
 
 export default class Credential {
+  static get keys() {
+    return ['domCd', 'user', 'pass'];
+  }
+
   static async retrieve(storage) {
     const props = await storage.get(defaultValues);
     props.pass = props.encpass ? crypt.decrypt(props.encpass) : '';
