@@ -21,8 +21,8 @@ export default class Service {
     window.open(Service.url('/xpoint/login.jsp?login=site'), '_blank');
   }
 
-  openForm({pathname, width, height}) {
-    window.open(Service.url(pathname), '_blank', `left=0,top=0,height=${height},width=${width},resizable=yes,scrollbars=yes`);
+  openForm({pathname, height, width}) {
+    window.open(Service.url(pathname), '_blank', `height=${height},width=${width}`);
   }
 
   async login({domCd, user, pass, loginType = 0}, options = {}) {
@@ -41,9 +41,9 @@ export default class Service {
 
     let matches;
     while ((matches = regexBookmarkParser.exec(text)) !== null) {
-      const [, pathname, width, height, title] = matches;
+      const [, pathname, height, width, title] = matches;
       results.push({
-        pathname, width, height,
+        pathname, height, width,
         title: title.replace('（（自動選択ルート））', '')
       });
     }
