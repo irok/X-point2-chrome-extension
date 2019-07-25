@@ -7,8 +7,11 @@
       const bookmarks = await service.getBookmarkList();
       for (let bkm of bookmarks) {
         const a = document.createElement('a');
-        a.setAttribute('href', 'javascript:void(0)');
-        a.addEventListener('click', () => service.openForm(bkm));
+        a.setAttribute('href', service.constructor.url(bkm.pathname));
+        a.addEventListener('click', (event) => {
+          event.preventDefault();
+          service.openForm(bkm);
+        });
         a.textContent = bkm.title;
         const div = document.createElement('div');
         div.appendChild(a);
