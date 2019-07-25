@@ -1,3 +1,21 @@
+import React, {Component} from 'react';
+import ReactDOM from 'react-dom';
+
+class PopupApp extends Component {
+  render() {
+    return (
+      <div>
+        <button id="open">X-pointを開く</button>
+        <div id="forms"></div>
+      </div>
+    );
+  }
+}
+
+ReactDOM.render(<PopupApp />, document.getElementById('popup-app'));
+
+/*
+ここから先はいったんコメントアウト
 (function() {
   chrome.runtime.getBackgroundPage(async ({credential, service}) => {
     try {
@@ -28,3 +46,4 @@ function openSite() {
 }
 
 document.getElementById('open').addEventListener('click', openSite);
+*/
