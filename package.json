@@ -1,31 +1,38 @@
 {
   "name": "x-point2-chrome-extension",
-  "version": "0.1.0",
   "description": "X-point2の自社向けChrome拡張です。",
+  "version": "0.1.0",
+  "author": "irok",
+  "browserslist": "last 2 Chrome versions",
+  "bugs": {
+    "url": "https://github.com/irok/X-point2-chrome-extension/issues"
+  },
+  "dependencies": {
+    "crypto-js": "^3.1.9-1",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.5.5",
+    "@babel/preset-env": "^7.5.5",
+    "@babel/preset-react": "^7.0.0",
+    "babel-loader": "^8.0.6",
+    "webpack": "^4.36.1",
+    "webpack-cli": "^3.3.6",
+    "webpack-merge": "^4.2.1"
+  },
+  "homepage": "https://github.com/irok/X-point2-chrome-extension#readme",
+  "keywords": [],
+  "license": "MIT",
   "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/irok/X-point2-chrome-extension.git"
+  },
   "scripts": {
     "build": "webpack --config webpack.dev.js",
     "build:prod": "webpack --config webpack.prod.js",
     "start": "webpack --config webpack.dev.js --watch",
     "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/irok/X-point2-chrome-extension.git"
-  },
-  "keywords": [],
-  "author": "irok",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/irok/X-point2-chrome-extension/issues"
-  },
-  "homepage": "https://github.com/irok/X-point2-chrome-extension#readme",
-  "devDependencies": {
-    "webpack": "^4.36.1",
-    "webpack-cli": "^3.3.6",
-    "webpack-merge": "^4.2.1"
-  },
-  "dependencies": {
-    "crypto-js": "^3.1.9-1"
   }
 }
