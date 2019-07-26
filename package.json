@@ -16,6 +16,9 @@
     "@babel/preset-env": "^7.5.5",
     "@babel/preset-react": "^7.0.0",
     "babel-loader": "^8.0.6",
+    "cross-zip-cli": "^1.0.0",
+    "npm-run-all": "^4.1.5",
+    "rimraf": "^2.6.3",
     "webpack": "^4.36.1",
     "webpack-cli": "^3.3.6",
     "webpack-merge": "^4.2.1"
@@ -29,8 +32,11 @@
     "url": "git+https://github.com/irok/X-point2-chrome-extension.git"
   },
   "scripts": {
+    "archive": "cross-zip dist extension.zip",
     "build": "webpack --config webpack.dev.js",
     "build:prod": "webpack --config webpack.prod.js",
+    "clean": "rimraf dist/js",
+    "make": "run-s clean build:prod archive",
     "start": "webpack --config webpack.dev.js --watch",
     "test": "echo \"Error: no test specified\" && exit 1"
   }

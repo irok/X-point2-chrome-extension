@@ -60,5 +60,6 @@ typings/
 # next.js build output
 .next
 
-# built code
+# built file
 dist/js/
+extension.zip
