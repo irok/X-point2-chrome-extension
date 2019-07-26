@@ -44,6 +44,7 @@ export default class Service {
       const [, pathname, height, width, title] = matches;
       results.push({
         pathname, height, width,
+        url: Service.url(pathname),
         title: title.replace('（（自動選択ルート））', '')
       });
     }
