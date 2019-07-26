@@ -40,7 +40,7 @@ class PopupApp extends Component {
         <FormLinks
           bookmarks={this.state.bookmarks}
           onClick={this.handleClickFormLink}
-        ></FormLinks>
+        />
       </div>
     );
   }
