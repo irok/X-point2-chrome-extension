@@ -5,7 +5,8 @@
   "description": "X-point2の自社向けChrome拡張です。",
   "author": "irok",
   "icons": {
-    "48":  "img/icon48.png"
+    "48": "img/icon48.png",
+    "128": "img/icon128.png"
   },
   "background": {
     "scripts": ["js/background.js"],
