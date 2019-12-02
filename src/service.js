@@ -51,4 +51,10 @@ export default class Service {
 
     return results;
   }
+
+  async getWkflCnt() {
+    const xml = await this._get('/xpoint/xpoint/front/getWkflCnt.jsp', {wkfl_list: ''});
+    const parser = new DOMParser();
+    return parser.parseFromString(xml, "application/xml");
+  }
 }
