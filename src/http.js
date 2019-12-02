@@ -4,11 +4,14 @@ async function request(url, options = {}) {
     throw new Error(`${resp.status} - ${resp.statusText}`);
   }
   const blob = await resp.blob();
+  const charset = resp.headers.get('Content-Type').split(/;\s*/)
+    .filter(part => /^charset=/.test(part))[0]
+    .split('=')[1];
 
   return new Promise((resolve) => {
     const reader = new FileReader();
     reader.onload = () => resolve(reader.result);
-    reader.readAsText(blob, 'Shift_JIS');
+    reader.readAsText(blob, charset);
   });
 }
 
