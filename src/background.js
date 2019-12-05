@@ -28,9 +28,12 @@ async function showPendingApprovalCount() {
   }
 }
 
-window.addEventListener('load', async () => {
+// Chrome起動時および定期的に実行する処理
+async function update() {
   try {
     await service.login(await credential.load());
     showPendingApprovalCount();
   } catch(e) {}
-});
+}
+
+chrome.runtime.onStartup.addListener(update);
