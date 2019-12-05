@@ -35,9 +35,11 @@ async function update() {
   } catch(e) {}
 }
 
-chrome.alarms.create('overwatch', {
-  periodInMinutes: 5
+// イベント設定
+chrome.runtime.onInstalled.addListener(() => {
+  chrome.alarms.create('overwatch', {
+    periodInMinutes: 5
+  });
 });
 chrome.alarms.onAlarm.addListener(update);
-
 chrome.runtime.onStartup.addListener(update);
