@@ -16,8 +16,8 @@ Object.assign(window, {
   service: new Service(http)
 });
 
-// 承認待ちの数をバッジに表示する
-async function showPendingApprovalCount() {
+// 承認待ちのワークフローを取得する
+async function updatePendingApproval() {
   const {wkflcnt} = await service.getWkflCnt();
   const wkfl = wkflcnt.wkfl.filter(_ => _.type._text === '0')[0];
   if (wkfl) {
@@ -31,7 +31,7 @@ async function showPendingApprovalCount() {
 async function update() {
   try {
     await service.login(await credential.load());
-    await showPendingApprovalCount();
+    await updatePendingApproval();
   } catch(e) {}
 }
 
