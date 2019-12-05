@@ -35,7 +35,7 @@ async function update() {
   } catch(e) {}
 }
 
-chrome.alarms.create({
+chrome.alarms.create('overwatch', {
   periodInMinutes: 5
 });
 chrome.alarms.onAlarm.addListener(update);
