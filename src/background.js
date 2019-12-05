@@ -32,7 +32,7 @@ async function showPendingApprovalCount() {
 async function update() {
   try {
     await service.login(await credential.load());
-    showPendingApprovalCount();
+    await showPendingApprovalCount();
   } catch(e) {}
 }
 
@@ -42,3 +42,5 @@ chrome.alarms.create({
 chrome.alarms.onAlarm.addListener(update);
 
 chrome.runtime.onStartup.addListener(update);
+
+window.addEventListener('load', update);
