@@ -56,6 +56,6 @@ export default class Service {
 
   async getWkflCnt() {
     const xml = await this._get('/xpoint/xpoint/front/getWkflCnt.jsp', {wkfl_list: ''});
-    return xml2js(xml, {compact: true});
+    return xml2js(xml, {compact: true, textKey: '_'});
   }
 }

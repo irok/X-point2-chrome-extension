@@ -19,11 +19,13 @@ Object.assign(window, {
 // 承認待ちのワークフローを取得する
 async function updatePendingApproval() {
   const {wkflcnt} = await service.getWkflCnt();
-  const wkfl = wkflcnt.wkfl.filter(_ => _.type._text === '0')[0];
-  if (wkfl) {
-    chrome.browserAction.setBadgeText({
-      text: wkfl.count._text
-    });
+  if (Array.isArray(wkflcnt.wkfl)) {
+    const wkfl = wkflcnt.wkfl.filter(w => w.type._ === '0')[0];
+    if (wkfl) {
+      chrome.browserAction.setBadgeText({
+        text: wkfl.count._
+      });
+    }
   }
 }
 
