@@ -12,7 +12,7 @@ export default class Credential {
   }
 
   static async retrieve(storage) {
-    const props = await storage.get(defaultValues);
+    const props = await storage.getSync(defaultValues);
     props.pass = props.encpass ? crypt.decrypt(props.encpass) : '';
     return (new Credential(storage)).assign(props);
   }
@@ -29,6 +29,6 @@ export default class Credential {
   async save() {
     const {domCd, user, pass} = this;
     const encpass = crypt.encrypt(pass);
-    await this.storage.set({domCd, user, encpass});
+    await this.storage.setSync({domCd, user, encpass});
   }
 }
