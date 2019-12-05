@@ -23,6 +23,7 @@
   },
   "permissions": [
     "https://xpt.gmo-media.jp/",
+    "alarms",
     "storage"
   ]
 }

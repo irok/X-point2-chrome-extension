@@ -36,4 +36,9 @@ async function update() {
   } catch(e) {}
 }
 
+chrome.alarms.create({
+  periodInMinutes: 5
+});
+chrome.alarms.onAlarm.addListener(update);
+
 chrome.runtime.onStartup.addListener(update);
