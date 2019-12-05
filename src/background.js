@@ -18,12 +18,11 @@ Object.assign(window, {
 
 // 承認待ちの数をバッジに表示する
 async function showPendingApprovalCount() {
-  const wkflCnt = await service.getWkflCnt();
-  const wkflList = Array.prototype.slice.call(wkflCnt.querySelectorAll('wkfl'));
-  const wkfl = wkflList.filter(_ => _.querySelector('type').textContent === '0')[0];
+  const {wkflcnt} = await service.getWkflCnt();
+  const wkfl = wkflcnt.wkfl.filter(_ => _.type._text === '0')[0];
   if (wkfl) {
     chrome.browserAction.setBadgeText({
-      text: wkfl.querySelector('count').textContent
+      text: wkfl.count._text
     });
   }
 }
@@ -42,5 +41,3 @@ chrome.alarms.create({
 chrome.alarms.onAlarm.addListener(update);
 
 chrome.runtime.onStartup.addListener(update);
-
-window.addEventListener('load', update);

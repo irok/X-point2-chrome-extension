@@ -1,3 +1,5 @@
+import {xml2js} from 'xml-js';
+
 const regexBookmarkParser = /<a href="javascript:openForm\('([^']+)','[^']+','(\d+)','(\d+)'\);" target="">(.+?)<\/a>/g;
 
 export default class Service {
@@ -54,7 +56,6 @@ export default class Service {
 
   async getWkflCnt() {
     const xml = await this._get('/xpoint/xpoint/front/getWkflCnt.jsp', {wkfl_list: ''});
-    const parser = new DOMParser();
-    return parser.parseFromString(xml, "application/xml");
+    return xml2js(xml, {compact: true});
   }
 }
