@@ -1,9 +1,15 @@
 import Credential from './credential';
 import Service from './service';
+import WkflList from './wkfllist';
 import http from './http';
 import storage from './storage';
 
 Object.assign(window, {
+  cache: {
+    wkfllist(data = null) {
+      return (new WkflList(storage)).cache(data);
+    }
+  },
   credential: {
     keys: Credential.keys,
     load() {
@@ -25,6 +31,9 @@ async function updatePendingApproval() {
       chrome.browserAction.setBadgeText({
         text: wkfl.count._
       });
+
+      // 申請内容をキャッシュする
+      await cache.wkfllist(wkflcnt.wlist && wkflcnt.wlist.dinfo);
     }
   }
 }
