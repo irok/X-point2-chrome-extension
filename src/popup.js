@@ -12,6 +12,14 @@ const FormLinks = (props) => (
 );
 
 class PopupApp extends Component {
+  static async loadBookmarks({credential, service}) {
+    try {
+      const crdt = await credential.load();
+      await service.login(crdt);
+      return await service.getBookmarkList();
+    } catch(e) {}
+  }
+
   constructor(props) {
     super(props);
     this.state = {
@@ -22,19 +30,11 @@ class PopupApp extends Component {
   }
 
   async init(bgPage) {
-    const bookmarks = await this.loadBookmarks(bgPage);
+    const bookmarks = await this.constructor.loadBookmarks(bgPage);
     const wkfllist = await bgPage.cache.wkfllist()
     this.setState({
       bookmarks, wkfllist
     });
-  }
-
-  async loadBookmarks({credential, service}) {
-    try {
-      const crdt = await credential.load();
-      await service.login(crdt);
-      return await service.getBookmarkList()
-    } catch(e) {}
   }
 
   render() {
