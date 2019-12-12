@@ -15,19 +15,25 @@ class PopupApp extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      bookmarks: []
+      bookmarks: [],
+      wkfllist: []
     };
-    chrome.runtime.getBackgroundPage(this.loadBookmarks.bind(this));
+    chrome.runtime.getBackgroundPage(this.init.bind(this));
+  }
+
+  async init(bgPage) {
+    const bookmarks = await this.loadBookmarks(bgPage);
+    const wkfllist = await bgPage.cache.wkfllist()
+    this.setState({
+      bookmarks, wkfllist
+    });
   }
 
   async loadBookmarks({credential, service}) {
     try {
       const crdt = await credential.load();
       await service.login(crdt);
-
-      this.setState({
-        bookmarks: await service.getBookmarkList()
-      });
+      return await service.getBookmarkList()
     } catch(e) {}
   }
 
