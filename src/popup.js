@@ -11,6 +11,31 @@ const FormLinks = (props) => (
   ))
 );
 
+const PendingApprovals = ({wkfllist}) => {
+  const count = wkfllist.length;
+  const body = count === 0 ? null : (
+    <table>
+      <tbody>{
+        wkfllist.map((wkfl, index) => (
+          <tr key={index}>
+            <td>{wkfl.doctitle._}</td>
+            <td>{wkfl.docname._}</td>
+            <td>{wkfl.writer._}</td>
+            <td dangerouslySetInnerHTML={{__html: wkfl.wdate._}}/>
+          </tr>
+        ))
+      }</tbody>
+    </table>
+  );
+
+  return (
+    <section>
+      <h1>承認待ち ({count})</h1>
+      {body}
+    </section>
+  );
+};
+
 class PopupApp extends Component {
   static async loadBookmarks({credential, service}) {
     try {
@@ -46,6 +71,9 @@ class PopupApp extends Component {
         <FormLinks
           bookmarks={this.state.bookmarks}
           onClick={this.handleClickFormLink}
+        />
+        <PendingApprovals
+          wkfllist={this.state.wkfllist}
         />
       </div>
     );
