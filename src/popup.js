@@ -1,15 +1,24 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 
-const FormLinks = (props) => (
-  props.bookmarks.map((bkm, index) => (
-    <p key={index}>
-      <a href={bkm.url} onClick={(event) => props.onClick(event, bkm)}>
-        {bkm.title}
-      </a>
-    </p>
-  ))
-);
+const FormLinks = ({bookmarks, onClick}) => {
+  const body = bookmarks.length === 0 ? null : (
+    <ul>{
+      bookmarks.map((bkm, index) => (
+        <li key={index}>
+          <a href={bkm.url} onClick={(event) => onClick(event, bkm)}>{bkm.title}</a>
+        </li>
+      ))
+    }</ul>
+  );
+
+  return (
+    <section>
+      <h1>提出</h1>
+      {body}
+    </section>
+  );
+};
 
 const PendingApprovals = ({wkfllist}) => {
   const count = wkfllist.length;
