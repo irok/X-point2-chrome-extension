@@ -20,14 +20,16 @@ const FormLinks = ({bookmarks, onClick}) => {
   );
 };
 
-const PendingApprovals = ({wkfllist}) => {
+const PendingApprovals = ({wkfllist, onClick}) => {
   const count = wkfllist.length;
   const body = count === 0 ? null : (
     <table>
       <tbody>{
         wkfllist.map((wkfl, index) => (
           <tr key={index}>
-            <td>{wkfl.doctitle._}</td>
+            <td>
+              <a onClick={(event) => onClick(event, wkfl)}>{wkfl.doctitle._}</a>
+            </td>
             <td>{wkfl.docname._}</td>
             <td>{wkfl.writer._}</td>
             <td dangerouslySetInnerHTML={{__html: wkfl.wdate._}}/>
@@ -83,6 +85,7 @@ class PopupApp extends Component {
         />
         <PendingApprovals
           wkfllist={this.state.wkfllist}
+          onClick={this.handleClickPendingApproval}
         />
       </div>
     );
@@ -98,6 +101,17 @@ class PopupApp extends Component {
     event.preventDefault();
     chrome.runtime.getBackgroundPage(({service}) => {
       service.openForm(bkm);
+    });
+  }
+
+  handleClickPendingApproval(event, wkfl) {
+    event.preventDefault();
+    chrome.runtime.getBackgroundPage(({service}) => {
+      service.openForm({
+        pathname: `/xpoint/form.do?act=view&docid=${wkfl.docid._}&fid=${wkfl.fid._}`,
+        height: wkfl.wheight._,
+        width: wkfl.wwidth._
+      });
     });
   }
 }
