@@ -28,11 +28,11 @@ const PendingApprovals = ({wkfllist, onClick}) => {
         wkfllist.map((wkfl, index) => (
           <tr key={index}>
             <td>
-              <a onClick={(event) => onClick(event, wkfl)}>{wkfl.doctitle._}</a>
+              <a href={wkfl.url} onClick={(event) => onClick(event, wkfl)}>{wkfl.doctitle}</a>
             </td>
-            <td>{wkfl.docname._}</td>
-            <td>{wkfl.writer._}</td>
-            <td dangerouslySetInnerHTML={{__html: wkfl.wdate._}}/>
+            <td>{wkfl.docname}</td>
+            <td>{wkfl.writer}</td>
+            <td>{wkfl.date}<br/>{wkfl.time}</td>
           </tr>
         ))
       }</tbody>
@@ -107,11 +107,7 @@ class PopupApp extends Component {
   handleClickPendingApproval(event, wkfl) {
     event.preventDefault();
     chrome.runtime.getBackgroundPage(({service}) => {
-      service.openForm({
-        pathname: `/xpoint/form.do?act=view&docid=${wkfl.docid._}&fid=${wkfl.fid._}`,
-        height: wkfl.wheight._,
-        width: wkfl.wwidth._
-      });
+      service.openForm(wkfl);
     });
   }
 }

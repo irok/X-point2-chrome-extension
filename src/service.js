@@ -56,6 +56,26 @@ export default class Service {
 
   async getWkflCnt() {
     const xml = await this._get('/xpoint/xpoint/front/getWkflCnt.jsp', {wkfl_list: ''});
-    return xml2js(xml, {compact: true, textKey: '_'});
+    const root = xml2js(xml, {compact: true, textKey: '_'});
+
+    if (root.wkflcnt.wlist && root.wkflcnt.wlist.dinfo) {
+      root.wkflcnt.wlist.dinfo = root.wkflcnt.wlist.dinfo.map((wkfl) => {
+        const pathname = `/xpoint/form.do?act=view&docid=${wkfl.docid._}&fid=${wkfl.fid._}`;
+        const [date, time] = wkfl.wdate._.split('<br>');
+        return {
+          pathname, date, time,
+          docid: wkfl.docid._,
+          docname: wkfl.docname._,
+          doctitle: wkfl.doctitle._,
+          fid: wkfl.fid._,
+          height: wkfl.wheight._,
+          width: wkfl.wwidth._,
+          writer: wkfl.writer._,
+          url: Service.url(pathname)
+        };
+      });
+    }
+
+    return root;
   }
 }
