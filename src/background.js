@@ -22,20 +22,13 @@ Object.assign(window, {
   service: new Service(http)
 });
 
-// 承認待ちのワークフローを取得する
+// 承認待ちのワークフローを取得してキャッシュする
 async function updatePendingApproval() {
-  const {wkflcnt} = await service.getWkflCnt();
-  if (Array.isArray(wkflcnt.wkfl)) {
-    const wkfl = wkflcnt.wkfl.filter(w => w.type._ === '0')[0];
-    if (wkfl) {
-      chrome.browserAction.setBadgeText({
-        text: wkfl.count._
-      });
-
-      // 申請内容をキャッシュする
-      await cache.wkfllist(wkflcnt.wlist && wkflcnt.wlist.dinfo);
-    }
-  }
+  const {wlist: {dinfo}} = await service.getWkflCnt();
+  chrome.browserAction.setBadgeText({
+    text: wlist.dinfo.length.toString()
+  });
+  await cache.wkfllist(dinfo);
 }
 
 // Chrome起動時および定期的に実行する処理
