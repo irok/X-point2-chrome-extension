@@ -47,3 +47,10 @@ chrome.runtime.onInstalled.addListener(() => {
 });
 chrome.alarms.onAlarm.addListener(update);
 chrome.runtime.onStartup.addListener(update);
+
+// バッジの初期表示
+window.addEventListener('load', async () => {
+  chrome.browserAction.setBadgeText({
+    text: (await cache.wkfllist()).length.toString()
+  });
+});
