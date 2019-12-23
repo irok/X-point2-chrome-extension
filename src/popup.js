@@ -66,10 +66,11 @@ class PopupApp extends Component {
   }
 
   async init(bgPage) {
-    const bookmarks = await this.constructor.loadBookmarks(bgPage);
-    const wkfllist = await bgPage.cache.wkfllist()
-    this.setState({
-      bookmarks, wkfllist
+    Promise.all([
+      this.constructor.loadBookmarks(bgPage),
+      bgPage.cache.wkfllist()
+    ]).then(([bookmarks, wkfllist]) => {
+      this.setState({bookmarks, wkfllist});
     });
   }
 
