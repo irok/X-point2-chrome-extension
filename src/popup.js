@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
+import './popup.scss';
 
 const FormLinks = ({bookmarks, onClick}) => {
   const body = bookmarks.length === 0 ? null : (
-    <ul>{
+    <ul className="section-body">{
       bookmarks.map((bkm, index) => (
         <li key={index}>
           <a href={bkm.url} onClick={(event) => onClick(event, bkm)}>{bkm.title}</a>
@@ -13,7 +14,7 @@ const FormLinks = ({bookmarks, onClick}) => {
   );
 
   return (
-    <section>
+    <section id="form-links">
       <h1>提出</h1>
       {body}
     </section>
@@ -23,24 +24,25 @@ const FormLinks = ({bookmarks, onClick}) => {
 const PendingApprovals = ({wkfllist, onClick}) => {
   const count = wkfllist.length;
   const body = count === 0 ? null : (
-    <table>
-      <tbody>{
-        wkfllist.map((wkfl, index) => (
-          <tr key={index}>
-            <td>
-              <a href={wkfl.url} onClick={(event) => onClick(event, wkfl)}>{wkfl.doctitle}</a>
-            </td>
-            <td>{wkfl.docname}</td>
-            <td>{wkfl.writer}</td>
-            <td>{wkfl.date}<br/>{wkfl.time}</td>
-          </tr>
-        ))
-      }</tbody>
-    </table>
+    <div className="section-body">
+      <table>
+        <tbody>{
+          wkfllist.map((wkfl, index) => (
+            <tr key={index}>
+              <td>
+                <a href={wkfl.url} onClick={(event) => onClick(event, wkfl)}>{wkfl.doctitle}</a>
+              </td>
+              <td>{wkfl.docname}<br/>{wkfl.writer}</td>
+              <td>{wkfl.date}<br/>{wkfl.time}</td>
+            </tr>
+          ))
+        }</tbody>
+      </table>
+    </div>
   );
 
   return (
-    <section>
+    <section id="pending-approvals">
       <h1>承認待ち ({count})</h1>
       {body}
     </section>
@@ -77,9 +79,11 @@ class PopupApp extends Component {
   render() {
     return (
       <div>
-        <button onClick={this.handleClickOpenSite}>
-          X-pointを開く
-        </button>
+        <header>
+          <button onClick={this.handleClickOpenSite}>
+            X-pointを開く
+          </button>
+        </header>
         <FormLinks
           bookmarks={this.state.bookmarks}
           onClick={this.handleClickFormLink}

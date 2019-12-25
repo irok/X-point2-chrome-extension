@@ -1,0 +1,124 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+
+  &::after, &::before {
+    box-sizing: inherit;
+  }
+}
+
+ul > li {
+  display: block;
+  padding: 0 6px;
+
+  &:not(:last-child) {
+    margin-bottom: 6px;
+  }
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+tr {
+  &:nth-child(even) {
+    background-color: #f2f4f9;
+  }
+}
+
+td {
+  padding: 4px 6px;
+
+  &:not(:last-child) {
+    border-right: 1px dotted #aaa;
+  }
+}
+
+a[href] {
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+body {
+  width: 480px;
+  font-family: MS PGothic,MS UI Gothic,Meiryo UI,Meiryo,SimHei,Hiragino Kaku Gothic ProN,Hiragino Kaku Gothic Pro,Hiragino Kaku Gothic ProN W3,Hiragino Kaku Gothic Pro W3,Hiragino Sans GB W3,Osaka,sans-serif;
+  font-size: 13px;
+  line-height: 1.2;
+}
+
+header {
+  position: relative;
+  height: 32px;
+  padding: 4px;
+  background-image: linear-gradient(#ffb200, #ff8600);
+
+  &::after {
+    display: block;
+    clear: both;
+    content: "";
+  }
+
+  button {
+    float: right;
+    padding: 0 4px;
+    border: none;
+    background-color: transparent;
+    color: #fff;
+    font-size: 12px;
+    line-height: 24px;;
+    cursor: pointer;
+  }
+}
+
+section {
+  margin: 4px;
+  padding: 1px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+}
+
+h1 {
+  padding-left: 8px;
+  background-image: linear-gradient(#ffca4d, #ffab4d);
+  color: #666;
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 28px;
+}
+
+.section-body {
+  margin: 8px 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+
+  #form-links & {
+    max-height: 120px;
+  }
+
+  #pending-approvals & {
+    max-height: 240px;
+    margin: 0;
+  }
+}
+
+#pending-approvals {
+  td:not(:nth-child(1)) {
+    font-size: 12px;
+  }
+
+  td:nth-child(2) {
+    overflow: hidden;
+    max-width: 160px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  td:nth-child(3) {
+    text-align: center;
+  }
+}
