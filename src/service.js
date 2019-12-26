@@ -58,7 +58,7 @@ export default class Service {
     const xml = await this._get('/xpoint/xpoint/front/getWkflCnt.jsp', {wkfl_list: ''});
     const {wkflcnt} = xml2js(xml, {compact: true, textKey: '_'});
 
-    if (wkflcnt.wlist && wkflcnt.wlist.dinfo) {
+    if (wkflcnt?.wlist?.dinfo) {
       if (!Array.isArray(wkflcnt.wlist.dinfo)) {
         wkflcnt.wlist.dinfo = [wkflcnt.wlist.dinfo];
       }
