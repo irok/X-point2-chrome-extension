@@ -26,12 +26,12 @@ Object.assign(window, {
 async function updatePendingApproval() {
   const {wlist: {dinfo}} = await service.getWkflCnt();
   chrome.browserAction.setBadgeText({
-    text: wlist.dinfo.length.toString()
+    text: dinfo.length.toString()
   });
   await cache.wkfllist(dinfo);
 }
 
-// Chrome起動時および定期的に実行する処理
+// 状態をアップデートする
 async function update() {
   try {
     await service.login(await credential.load());
@@ -39,18 +39,15 @@ async function update() {
   } catch(e) {}
 }
 
-// イベント設定
-chrome.runtime.onInstalled.addListener(() => {
+// 初期化処理
+async function setup() {
   chrome.alarms.create('overwatch', {
     periodInMinutes: 5
   });
-});
-chrome.alarms.onAlarm.addListener(update);
-chrome.runtime.onStartup.addListener(update);
+  await update();
+}
 
-// バッジの初期表示
-window.addEventListener('load', async () => {
-  chrome.browserAction.setBadgeText({
-    text: (await cache.wkfllist()).length.toString()
-  });
-});
+// イベント設定
+chrome.runtime.onInstalled.addListener(setup);
+chrome.runtime.onStartup.addListener(setup);
+chrome.alarms.onAlarm.addListener(update);
