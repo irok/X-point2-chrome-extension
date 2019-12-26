@@ -1,13 +1,13 @@
-import Credential from './credential';
-import Service from './service';
-import WkflList from './wkfllist';
-import http from './http';
-import storage from './storage';
+import Credential from './libs/Credential';
+import Service from './libs/Service';
+import WkflListCache from './libs/WkflListCache';
+import http from './libs/http';
+import storage from './libs/storage';
 
 Object.assign(window, {
   cache: {
     wkfllist(data = null) {
-      return (new WkflList(storage)).cache(data);
+      return (new WkflListCache(storage)).cache(data);
     }
   },
   credential: {

@@ -1,6 +1,6 @@
-import Cache from './cache';
+import Cache from './Cache';
 
-export default class WkflList extends Cache {
+export default class WkflListCache extends Cache {
   static defaultValues() {
     return  {
       wkfllist: []
