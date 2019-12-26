@@ -3,14 +3,6 @@ import FormLinks from './FormLinks.jsx';
 import PendingApprovals from './PendingApprovals.jsx';
 
 export default class PopupApp extends Component {
-  static async loadBookmarks({credential, service}) {
-    try {
-      const crdt = await credential.load();
-      await service.login(crdt);
-      return await service.getBookmarkList();
-    } catch(e) {}
-  }
-
   constructor(props) {
     super(props);
     this.state = {
@@ -20,13 +12,15 @@ export default class PopupApp extends Component {
     chrome.runtime.getBackgroundPage(this.init.bind(this));
   }
 
-  async init(bgPage) {
-    Promise.all([
-      this.constructor.loadBookmarks(bgPage),
-      bgPage.cache.wkfllist()
-    ]).then(([bookmarks, wkfllist]) => {
+  async init({cache, login}) {
+    try {
+      await login();
+      const [bookmarks, wkfllist] = await Promise.all([
+        cache.bookmarks(),
+        cache.wkfllist()
+      ]);
       this.setState({bookmarks, wkfllist});
-    });
+    } catch(e) {}
   }
 
   render() {

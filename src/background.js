@@ -1,11 +1,15 @@
+import BookmarksCache from './libs/BookmarksCache';
 import Credential from './libs/Credential';
 import Service from './libs/Service';
 import WkflListCache from './libs/WkflListCache';
 import http from './libs/http';
 import storage from './libs/storage';
 
-Object.assign(window, {
+const bgPage = {
   cache: {
+    bookmarks(data = null) {
+      return (new BookmarksCache(storage)).cache(data);
+    },
     wkfllist(data = null) {
       return (new WkflListCache(storage)).cache(data);
     }
@@ -19,8 +23,19 @@ Object.assign(window, {
       return (new Credential(storage)).assign(data);
     }
   },
+  async login() {
+    const {credential, service} = bgPage;
+    service.login(await credential.load());
+  },
   service: new Service(http)
-});
+};
+Object.assign(window, bgPage);
+
+// ブックマークを取得してキャッシュする
+async function updateBookmarks() {
+  const bookmarks = await service.getBookmarkList();
+  await cache.bookmarks(bookmarks);
+}
 
 // 承認待ちのワークフローを取得してキャッシュする
 async function updatePendingApproval() {
@@ -33,9 +48,13 @@ async function updatePendingApproval() {
 
 // 状態をアップデートする
 async function update() {
+  const {login} = bgPage;
   try {
-    await service.login(await credential.load());
-    await updatePendingApproval();
+    await login();
+    await Promise.all([
+      updateBookmarks(),
+      updatePendingApproval()
+    ]);
   } catch(e) {}
 }
 
