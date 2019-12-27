@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "X-point2 Chrome Extension",
   "version": "1.1.1",
-  "description": "X-point2の自社向けChrome拡張です。",
+  "description": "【GMOメディア社向け】X-point2のChrome拡張です。",
   "author": "irok",
   "icons": {
     "48": "img/icon48.png",
