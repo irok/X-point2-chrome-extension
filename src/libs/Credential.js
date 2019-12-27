@@ -31,4 +31,8 @@ export default class Credential {
     const encpass = crypt.encrypt(pass);
     await this.storage.setSync({domCd, user, encpass});
   }
+
+  empty() {
+    return this.user === '' && this.pass === '';
+  }
 }
