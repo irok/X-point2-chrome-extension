@@ -62,6 +62,11 @@ async function update() {
   chrome.browserAction.setBadgeText(badge);
 }
 
+// イベント設定
+chrome.runtime.onInstalled.addListener(async function({reason}) {
+  // 再インストールしたとき、ローカルキャッシュが残っていることがあるのでクリアする
+  if (reason === 'install') {
+    const {cache} = bgPage;
     await Promise.all([
       cache.bookmarks(null),
       cache.wkfllist(null)
@@ -69,15 +74,11 @@ async function update() {
   }
 });
 
-// 初期化処理
-async function setup() {
+chrome.runtime.onStartup.addListener(async function() {
   chrome.alarms.create('overwatch', {
     periodInMinutes: 5
   });
   await update();
-}
+});
 
-// イベント設定
-chrome.runtime.onInstalled.addListener(setup);
-chrome.runtime.onStartup.addListener(setup);
 chrome.alarms.onAlarm.addListener(update);
