@@ -1,5 +1,5 @@
 function saveOptions() {
-  chrome.runtime.getBackgroundPage(async ({credential, service}) => {
+  chrome.runtime.getBackgroundPage(async ({credential, service, update}) => {
     const data = Object.fromEntries(
       credential.keys.map(key => [key, document.getElementById(key).value])
     );
@@ -7,9 +7,12 @@ function saveOptions() {
     const status = document.getElementById('status');
 
     try {
-      if (await service.authenticate(crdt)) {
+      if (crdt.empty() || await service.authenticate(crdt)) {
         await crdt.save();
         status.textContent = '保存しました';
+        if (!crdt.empty()) {
+          await update();
+        }
       } else {
         status.textContent = 'ログイン情報が正しくありません';
       }

@@ -25,9 +25,10 @@ const bgPage = {
   },
   async login() {
     const {credential, service} = bgPage;
-    service.login(await credential.load());
+    return await service.login(await credential.load());
   },
-  service: new Service(http)
+  service: new Service(http),
+  update
 };
 Object.assign(window, bgPage);
 
@@ -40,23 +41,33 @@ async function updateBookmarks() {
 // 承認待ちのワークフローを取得してキャッシュする
 async function updatePendingApproval() {
   const {wlist: {dinfo}} = await service.getWkflCnt();
-  chrome.browserAction.setBadgeText({
-    text: dinfo.length.toString()
-  });
   await cache.wkfllist(dinfo);
 }
 
-// 状態をアップデートする
+// 最新の情報を取り込む
 async function update() {
   const {login} = bgPage;
+  const badge = {text: ''};
+
   try {
-    await login();
+    if (await login()) {
+      await Promise.all([
+        updateBookmarks(),
+        updatePendingApproval()
+      ]);
+      badge.text = (await cache.wkfllist()).length.toString();
+    }
+  } catch(e) {};
+
+  chrome.browserAction.setBadgeText(badge);
+}
+
     await Promise.all([
       cache.bookmarks(null),
       cache.wkfllist(null)
     ]);
-  } catch(e) {}
-}
+  }
+});
 
 // 初期化処理
 async function setup() {
