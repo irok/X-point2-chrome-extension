@@ -2,7 +2,11 @@ import React from 'react';
 
 export default ({wkfllist, onClick}) => {
   const count = wkfllist.length;
-  const body = count === 0 ? null : (
+  const body = count === 0 ? (
+    <p className="info">
+      承認待ちの申請はありません。
+    </p>
+  ) : (
     <div className="section-body">
       <table>
         <tbody>{

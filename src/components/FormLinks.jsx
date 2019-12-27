@@ -1,7 +1,12 @@
 import React from 'react';
 
 export default ({bookmarks, onClick}) => {
-  const body = bookmarks.length === 0 ? null : (
+  const body = bookmarks.length === 0 ? (
+    <p className="info">
+      X-pointのブックマーク機能に登録したフォームがここに表示されます。<br/>
+      よく使うフォームがあれば登録してみてください。
+    </p>
+  ) : (
     <ul className="section-body">{
       bookmarks.map((bkm, index) => (
         <li key={index}>
