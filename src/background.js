@@ -71,6 +71,9 @@ chrome.runtime.onInstalled.addListener(async function({reason}) {
       cache.bookmarks(null),
       cache.wkfllist(null)
     ]);
+  } else {
+    // それ以外なら更新
+    await update();
   }
 });
 
