@@ -7,10 +7,10 @@ import storage from './libs/storage';
 
 const bgPage = {
   cache: {
-    bookmarks(data = null) {
+    bookmarks(data) {
       return (new BookmarksCache(storage)).cache(data);
     },
-    wkfllist(data = null) {
+    wkfllist(data) {
       return (new WkflListCache(storage)).cache(data);
     }
   },
@@ -52,8 +52,8 @@ async function update() {
   try {
     await login();
     await Promise.all([
-      updateBookmarks(),
-      updatePendingApproval()
+      cache.bookmarks(null),
+      cache.wkfllist(null)
     ]);
   } catch(e) {}
 }

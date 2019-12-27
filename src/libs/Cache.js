@@ -4,8 +4,12 @@ export default class Cache {
   }
 
   // return Promise
-  async cache(data = null) {
-    return data ? this.set(data) : this.get();
+  async cache(data) {
+    if (typeof data !== 'undefined') {
+      this.set(data);
+      return;
+    }
+    return this.get();
   }
 
   // return Promise

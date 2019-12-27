@@ -18,6 +18,10 @@ export default class BookmarksCache extends Cache {
 
   // return Promise
   set(bookmarks) {
+    // 要素がなければキャッシュをクリアする（空配列で上書き）
+    if (!bookmarks) {
+      bookmarks = [];
+    }
     return this._set({bookmarks});
   }
 }
