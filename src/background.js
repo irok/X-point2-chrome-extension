@@ -47,7 +47,6 @@ async function updatePendingApproval() {
 // 最新の情報を取り込む
 async function update() {
   const {login} = bgPage;
-  const badge = {text: ''};
 
   try {
     if (await login()) {
@@ -55,11 +54,12 @@ async function update() {
         updateBookmarks(),
         updatePendingApproval()
       ]);
-      badge.text = (await cache.wkfllist()).length.toString();
     }
   } catch(e) {};
 
-  chrome.browserAction.setBadgeText(badge);
+  chrome.browserAction.setBadgeText({
+    text: (await cache.wkfllist()).length.toString()
+  });
 }
 
 // イベント設定
@@ -84,4 +84,4 @@ chrome.runtime.onStartup.addListener(async function() {
   await update();
 });
 
-chrome.alarms.onAlarm.addListener(update);
+chrome.alarms.onAlarm.addListener(async () => await update());
