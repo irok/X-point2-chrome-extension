@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import FormLinks from './FormLinks.jsx';
 import PendingApprovals from './PendingApprovals.jsx';
 
@@ -6,7 +6,7 @@ export default (props) => {
   const body = props.error ? (
     <p className="info">{props.error}</p>
   ) : (
-    <React.Fragment>
+    <Fragment>
       <FormLinks
         bookmarks={props.bookmarks}
         onClick={props.openForm}
@@ -15,7 +15,7 @@ export default (props) => {
         wkfllist={props.wkfllist}
         onClick={props.openForm}
       />
-    </React.Fragment>
+    </Fragment>
   );
 
   return (
