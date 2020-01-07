@@ -1,36 +1,63 @@
-import React from 'react';
+import React, {Suspense} from 'react';
 import ReactDOM from 'react-dom';
-import PopupApp from './components/PopupApp.jsx';
+import Info from './components/Info.jsx';
+import PopupBody from './components/PopupBody.jsx';
+import Spinner from "./components/Spinner.jsx";
 import './popup.scss';
 
-chrome.runtime.getBackgroundPage(async ({cache, credential, login, service}) => {
-  const props = {
-    openSite() {
-      service.openSite();
-    },
-    openForm(event, form) {
-      event.preventDefault();
-      service.openForm(form);
-    }
-  };
+function createPopupBodySuspense({cache, credential, login, service}) {
+  async function props() {
+    const [bookmarks, wkfllist] = await Promise.all([
+      cache.bookmarks(),
+      cache.wkfllist()
+    ]);
 
-  if ((await credential.load()).user === '') {
-    props.error = 'アイコンを右クリックし、オプションからログイン情報を設定してください。';
-  } else {
-    try {
-      if (await login()) {
-        const [bookmarks, wkfllist] = await Promise.all([
-          cache.bookmarks(),
-          cache.wkfllist()
-        ]);
-        Object.assign(props, {bookmarks, wkfllist});
-      } else {
-        props.error = 'ログインできませんでした。';
+    return {
+      bookmarks, wkfllist,
+      openForm(event, form) {
+        event.preventDefault();
+        service.openForm(form);
       }
-    } catch (e) {
-      props.error = 'ネットワークエラーが発生しました。社外の場合はVPNを確認してください。';
-    }
+    };
   }
 
-  ReactDOM.render(<PopupApp {...props}/>, document.getElementById('popup-app'));
+  let component = null;
+
+  return () => {
+    if (component) {
+      return component;
+    }
+
+    throw (new Promise(async (resolve) => {
+      if ((await credential.load()).user === '') {
+        resolve(<Info.NoSettings/>);
+      } else {
+        try {
+          if (await login()) {
+            resolve(<PopupBody {...(await props())}/>);
+          } else {
+            resolve(<Info.LoginFailed/>);
+          }
+        } catch(e) {
+          resolve(<Info.NetworkError/>);
+        }
+      }
+    })).then((newComponent) => component = newComponent);
+  };
+}
+
+chrome.runtime.getBackgroundPage(async (bgPage) => {
+  const PopupBodySuspense = createPopupBodySuspense(bgPage);
+  const Popup = () => (
+    <div>
+      <header>
+        <button onClick={() => bgPage.service.openSite()}>X-pointを開く</button>
+      </header>
+      <Suspense fallback={<Spinner/>}>
+        <PopupBodySuspense/>
+      </Suspense>
+    </div>
+  );
+
+  ReactDOM.render(<Popup/>, document.getElementById('popup-app'));
 });
