@@ -113,6 +113,12 @@ h1 {
   color: #666;
 }
 
+.spinner {
+  width: 40px;
+  height: 40px;
+  margin: 8px auto;
+}
+
 #pending-approvals {
   td:nth-child(2) {
     overflow: hidden;
