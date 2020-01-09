@@ -1,7 +1,7 @@
 {
   "name": "x-point2-chrome-extension",
   "description": "X-point2の自社向けChrome拡張です。",
-  "version": "1.1.2",
+  "version": "1.1.3",
   "author": "irok",
   "bugs": {
     "url": "https://github.com/irok/X-point2-chrome-extension/issues"
