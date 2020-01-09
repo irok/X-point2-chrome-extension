@@ -44,8 +44,11 @@ async function updateBookmarks() {
 
 // 承認待ちのワークフローを取得してキャッシュする
 async function updatePendingApproval() {
-  const {wlist: {dinfo}} = await bgPage.service.getWkflCnt();
-  await cache.wkfllist(dinfo);
+  const {count: {type0}, wlist: {dinfo}} = await bgPage.service.getWkflCnt();
+  await cache.wkfllist({
+    count: type0,
+    wkfls: dinfo
+  });
 }
 
 // 最新の情報を取り込む
@@ -59,9 +62,9 @@ async function update() {
     }
   } catch(e) {};
 
-  const count = (await cache.wkfllist()).length;
+  const {count} = await cache.wkfllist();
   chrome.browserAction.setBadgeText({
-    text: count === 0 ? '' : count.toString()
+    text: count === 0 ? '' : '' + count
   });
 }
 

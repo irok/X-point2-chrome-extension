@@ -2,8 +2,9 @@ import Cache from './Cache';
 
 export default class WkflListCache extends Cache {
   static defaultValues() {
-    return  {
-      wkfllist: []
+    return {
+      count: 0,
+      wkfls: []
     };
   }
 
@@ -12,21 +13,12 @@ export default class WkflListCache extends Cache {
   }
 
   // return Promise
-  async get() {
-    return (await this._get()).wkfllist;
-  }
-
-  // return Promise
-  set(wkfllist) {
-    // 要素がなければキャッシュをクリアする（空配列で上書き）
-    if (!wkfllist) {
-      wkfllist = [];
+  set({count, wkfls} = {}) {
+    // 要素がなければキャッシュをクリアする
+    if (!count || !wkfls) {
+      count = 0;
+      wkfls = [];
     }
-    // 要素が1つのときは単一オブジェクトになるので配列にする
-    else if (!Array.isArray(wkfllist)) {
-      wkfllist = [wkfllist];
-    }
-
-    return this._set({wkfllist});
+    return super.set({count, wkfls});
   }
 }

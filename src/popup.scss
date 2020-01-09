@@ -1,3 +1,11 @@
+@mixin clearfix {
+  &::after {
+    display: block;
+    clear: both;
+    content: "";
+  }
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -9,7 +17,7 @@
 }
 
 body {
-  width: 480px;
+  width: 500px;
   font-family: MS PGothic,MS UI Gothic,Meiryo UI,Meiryo,SimHei,Hiragino Kaku Gothic ProN,Hiragino Kaku Gothic Pro,Hiragino Kaku Gothic ProN W3,Hiragino Kaku Gothic Pro W3,Hiragino Sans GB W3,Osaka,sans-serif;
   font-size: 13px;
   line-height: 1.2;
@@ -53,16 +61,12 @@ a[href] {
 }
 
 header {
+  @include clearfix;
+
   position: relative;
   height: 32px;
   padding: 4px;
   background-image: linear-gradient(#ffb200, #ff8600);
-
-  &::after {
-    display: block;
-    clear: both;
-    content: "";
-  }
 
   button {
     float: right;
@@ -93,16 +97,15 @@ h1 {
 }
 
 .section-body {
-  margin: 8px 0;
   overflow-x: hidden;
-  overflow-y: auto;
 
   #form-links & {
-    max-height: 120px;
+    margin: 8px 0;
+    overflow-y: auto;
+    max-height: 240px;
   }
 
   #pending-approvals & {
-    max-height: 240px;
     margin: 0;
   }
 }
@@ -131,5 +134,22 @@ h1 {
   td:nth-child(3) {
     text-align: center;
     font-size: 12px;
+  }
+
+  h1 {
+    @include clearfix;
+  }
+
+  .more {
+    float: right;
+    height: 28px;
+    padding: 0 8px;
+    border: none;
+    background-color: transparent;
+    color: #666;
+    text-shadow: 1px 1px #ffca4d;
+    font-size: 12px;
+    line-height: 1;
+    cursor: pointer;
   }
 }

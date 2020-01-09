@@ -27,6 +27,10 @@ export default class Service {
     window.open(Service.url(pathname), '_blank', `height=${height},width=${width}`);
   }
 
+  openSeekWait() {
+    window.open(Service.url('/xpoint/wfDocSeek.do?act=seekMain&viewType=1&viewFrom=wf_view_wait&fgId=-1&formData=-1&currentStep=-1'), '_blank', 'height=800,width=1000');
+  }
+
   async login({domCd, user, pass, loginType = 0}, options = {}) {
     const data = {domCd, user, pass, loginType};
     const text = await this._post('/xpoint/login.do', data, options);
@@ -67,12 +71,12 @@ export default class Service {
       if (!Array.isArray(wkflcnt.wkfl)) {
         wkflcnt.wkfl = [wkflcnt.wkfl];
       }
-      wkflcnt.wkfl = wkflcnt.wkfl.map((wkfl) => ({
-        type: wkfl.type._,
-        count: wkfl.count._
-      }));
+      wkflcnt.count = wkflcnt.wkfl.reduce((acc, cur) => {
+        acc[`type${cur.type._}`] = cur.count._ - 0;
+        return acc;
+      }, {});
     } else {
-      wkflcnt.wkfl = [];
+      wkflcnt.count = {};
     }
 
     if (wkflcnt.wlist?.dinfo) {

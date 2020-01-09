@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default ({bookmarks, onClick}) => {
+export default ({bookmarks, onClickForm}) => {
   const body = bookmarks.length === 0 ? (
     <p className="info">
       X-pointのブックマーク機能に登録したフォームがここに表示されます。<br/>
@@ -10,7 +10,7 @@ export default ({bookmarks, onClick}) => {
     <ul className="section-body">{
       bookmarks.map((bkm, index) => (
         <li key={index}>
-          <a href={bkm.url} onClick={(event) => onClick(event, bkm)}>{bkm.title}</a>
+          <a href={bkm.url} onClick={(event) => onClickForm(event, bkm)}>{bkm.title}</a>
         </li>
       ))
     }</ul>

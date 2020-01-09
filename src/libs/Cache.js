@@ -5,20 +5,23 @@ export default class Cache {
 
   // return Promise
   async cache(data) {
-    if (typeof data !== 'undefined') {
-      this.set(data);
-      return;
+    if (typeof data === 'undefined') {
+      return this.get();
     }
-    return this.get();
+
+    if (data === null) {
+      data = this.constructor.defaultValues();
+    }
+    return this.set(data);
   }
 
   // return Promise
-  _get() {
+  get() {
     return this.storage.get(this.constructor.defaultValues());
   }
 
   // return Promise
-  _set(data) {
+  set(data) {
     this.storage.set(data);
   }
 }

@@ -7,16 +7,19 @@ import './popup.scss';
 
 function createPopupBodySuspense({cache, credential, login, service}) {
   async function props() {
-    const [bookmarks, wkfllist] = await Promise.all([
+    const [bookmarks, {count, wkfls}] = await Promise.all([
       cache.bookmarks(),
       cache.wkfllist()
     ]);
 
     return {
-      bookmarks, wkfllist,
+      bookmarks, count, wkfls,
       openForm(event, form) {
         event.preventDefault();
         service.openForm(form);
+      },
+      openSeekWait() {
+        service.openSeekWait();
       }
     };
   }

@@ -2,7 +2,7 @@ import Cache from './Cache';
 
 export default class BookmarksCache extends Cache {
   static defaultValues() {
-    return  {
+    return {
       bookmarks: []
     };
   }
@@ -13,15 +13,15 @@ export default class BookmarksCache extends Cache {
 
   // return Promise
   async get() {
-    return (await this._get()).bookmarks;
+    return (await super.get()).bookmarks;
   }
 
   // return Promise
   set(bookmarks) {
-    // 要素がなければキャッシュをクリアする（空配列で上書き）
+    // 要素がなければキャッシュをクリアする
     if (!bookmarks) {
       bookmarks = [];
     }
-    return this._set({bookmarks});
+    return super.set({bookmarks});
   }
 }

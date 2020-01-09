@@ -6,11 +6,13 @@ export default (props) => (
   <Fragment>
     <FormLinks
       bookmarks={props.bookmarks}
-      onClick={props.openForm}
+      onClickForm={props.openForm}
     />
     <PendingApprovals
-      wkfllist={props.wkfllist}
-      onClick={props.openForm}
+      count={props.count}
+      wkfls={props.wkfls}
+      onClickForm={props.openForm}
+      onClickMore={props.openSeekWait}
     />
   </Fragment>
 );
