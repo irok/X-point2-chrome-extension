@@ -37,6 +37,11 @@ export default class Service {
     return await this.login(credential, {credentials: 'omit'});
   }
 
+  async isAuthenticated() {
+    const text = await this._get('/xpoint/');
+    return text.includes('ログイン中のセッションです');
+  }
+
   async getBookmarkList() {
     const text = await this._get('/xpoint/xpoint/front/portlet/bookmarkListPortlet.jsp');
     const results = [];
