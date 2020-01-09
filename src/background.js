@@ -59,8 +59,9 @@ async function update() {
     }
   } catch(e) {};
 
+  const count = (await cache.wkfllist()).length;
   chrome.browserAction.setBadgeText({
-    text: (await cache.wkfllist()).length.toString()
+    text: count === 0 ? '' : count.toString()
   });
 }
 
