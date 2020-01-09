@@ -47,10 +47,8 @@ async function updatePendingApproval() {
 
 // 最新の情報を取り込む
 async function update() {
-  const {login, service: {isAuthenticated}} = bgPage;
-
   try {
-    if (await isAuthenticated() || await login()) {
+    if (await bgPage.login()) {
       await Promise.all([
         updateBookmarks(),
         updatePendingApproval()
