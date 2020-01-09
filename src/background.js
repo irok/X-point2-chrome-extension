@@ -35,22 +35,22 @@ Object.assign(window, bgPage);
 
 // ブックマークを取得してキャッシュする
 async function updateBookmarks() {
-  const bookmarks = await service.getBookmarkList();
+  const bookmarks = await bgPage.service.getBookmarkList();
   await cache.bookmarks(bookmarks);
 }
 
 // 承認待ちのワークフローを取得してキャッシュする
 async function updatePendingApproval() {
-  const {wlist: {dinfo}} = await service.getWkflCnt();
+  const {wlist: {dinfo}} = await bgPage.service.getWkflCnt();
   await cache.wkfllist(dinfo);
 }
 
 // 最新の情報を取り込む
 async function update() {
-  const {login} = bgPage;
+  const {login, service: {isAuthenticated}} = bgPage;
 
   try {
-    if (await login()) {
+    if (await isAuthenticated() || await login()) {
       await Promise.all([
         updateBookmarks(),
         updatePendingApproval()
