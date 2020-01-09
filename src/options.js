@@ -1,5 +1,5 @@
 function saveOptions() {
-  chrome.runtime.getBackgroundPage(async ({credential, service, update}) => {
+  chrome.runtime.getBackgroundPage(async ({cache, credential, service, update}) => {
     const data = Object.fromEntries(
       credential.keys.map(key => [key, document.getElementById(key).value])
     );
@@ -10,7 +10,14 @@ function saveOptions() {
       if (crdt.empty() || await service.authenticate(crdt)) {
         await crdt.save();
         status.textContent = '保存しました';
-        if (!crdt.empty()) {
+        if (crdt.empty()) {
+          // 認証情報が消されたらキャッシュを消す
+          await Promise.all([
+            cache.bookmarks(null),
+            cache.wkfllist(null)
+          ]);
+        } else {
+          // それ以外ならキャッシュを更新してバッジを表示
           await update();
         }
       } else {

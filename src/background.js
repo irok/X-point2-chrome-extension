@@ -74,7 +74,7 @@ chrome.runtime.onInstalled.addListener(async function({reason}) {
       cache.wkfllist(null)
     ]);
   } else {
-    // それ以外なら更新
+    // それ以外ならキャッシュを更新してバッジを表示
     await update();
   }
 });
