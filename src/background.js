@@ -25,7 +25,8 @@ const bgPage = {
   },
   async login() {
     const {credential, service} = bgPage;
-    return await service.login(await credential.load());
+    const crdt = await credential.load();
+    return !crdt.empty() && await service.login(crdt);
   },
   service: new Service(http),
   update

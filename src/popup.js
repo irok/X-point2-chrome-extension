@@ -29,7 +29,7 @@ function createPopupBodySuspense({cache, credential, login, service}) {
     }
 
     throw (new Promise(async (resolve) => {
-      if ((await credential.load()).user === '') {
+      if ((await credential.load()).empty()) {
         resolve(<Info.NoSettings/>);
       } else {
         try {
