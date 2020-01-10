@@ -17,6 +17,14 @@
     "default_title": "X-point2",
     "default_popup": "html/popup.html"
   },
+  "content_scripts": [
+    {
+      "matches": ["https://xpt.gmo-media.jp/*"],
+      "js": ["js/content.js"],
+      "run_at": "document_end",
+      "all_frames": true
+    }
+  ],
   "options_ui": {
     "page": "html/options.html",
     "open_in_tab": false

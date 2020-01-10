@@ -3,6 +3,7 @@ const path = require('path');
 module.exports = {
   entry: {
     'background.js': './src/background.js',
+    'content.js': './src/content.js',
     'options.js': './src/options.js',
     'popup.js': './src/popup.js'
   },
