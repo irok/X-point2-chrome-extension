@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "X-point2 Chrome Extension",
-  "version": "1.1.3",
+  "version": "1.1.4",
   "description": "【GMOメディア社向け】X-point2のChrome拡張です。",
   "author": "irok",
   "icons": {
@@ -17,6 +17,14 @@
     "default_title": "X-point2",
     "default_popup": "html/popup.html"
   },
+  "content_scripts": [
+    {
+      "matches": ["https://xpt.gmo-media.jp/*"],
+      "js": ["js/content.js"],
+      "run_at": "document_end",
+      "all_frames": true
+    }
+  ],
   "options_ui": {
     "page": "html/options.html",
     "open_in_tab": false
