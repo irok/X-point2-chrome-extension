@@ -1,5 +1,6 @@
 import BookmarksCache from './libs/BookmarksCache';
 import Credential from './libs/Credential';
+import Prefers from './libs/Prefers';
 import Service from './libs/Service';
 import WkflListCache from './libs/WkflListCache';
 import http from './libs/http';
@@ -21,6 +22,14 @@ const bgPage = {
     },
     create(data) {
       return (new Credential(storage)).assign(data);
+    }
+  },
+  prefers: {
+    load() {
+      return Prefers.retrieve(storage);
+    },
+    create(data) {
+      return (new Prefers(storage)).assign(data);
     }
   },
   async login() {

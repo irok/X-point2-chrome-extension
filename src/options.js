@@ -1,14 +1,23 @@
 function saveOptions() {
-  chrome.runtime.getBackgroundPage(async ({cache, credential, service, update}) => {
-    const data = Object.fromEntries(
+  chrome.runtime.getBackgroundPage(async ({cache, credential, prefers, service, update}) => {
+    // 認証情報
+    const crdt = credential.create(Object.fromEntries(
       credential.keys.map(key => [key, document.getElementById(key).value])
-    );
-    const crdt = credential.create(data);
+    ));
+
+    // その他の設定
+    const prfs = prefers.create({
+      showPendingApprovals: document.getElementById('showPendingApprovals').checked
+    });
+
     const status = document.getElementById('status');
 
     try {
       if (crdt.empty() || await service.authenticate(crdt)) {
-        await crdt.save();
+        await Promise.all([
+          crdt.save(),
+          prfs.save()
+        ]);
         status.textContent = '保存しました';
         if (crdt.empty()) {
           // 認証情報が消されたらキャッシュを消す
@@ -31,11 +40,16 @@ function saveOptions() {
 }
 
 function restoreOptions() {
-  chrome.runtime.getBackgroundPage(async ({credential}) => {
+  chrome.runtime.getBackgroundPage(async ({credential, prefers}) => {
+    // 認証情報
     const crdt = await credential.load();
     for (let key of credential.keys) {
       document.getElementById(key).value = crdt[key];
     }
+
+    // その他の設定
+    const prfs = await prefers.load();
+    document.getElementById('showPendingApprovals').checked = prfs.showPendingApprovals;
   });
 }
 

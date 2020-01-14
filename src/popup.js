@@ -5,14 +5,14 @@ import PopupBody from './components/PopupBody.jsx';
 import Spinner from "./components/Spinner.jsx";
 import './popup.scss';
 
-function createPopupBodySuspense({cache, credential, login, service}) {
+function createPopupBodySuspense({cache, credential, login, prefers, service}) {
   async function props() {
     const [bookmarks, {count, wkfls}] = await Promise.all([
       cache.bookmarks(),
       cache.wkfllist()
     ]);
 
-    return {
+    return Object.assign({
       bookmarks, count, wkfls,
       openForm(event, form) {
         event.preventDefault();
@@ -21,7 +21,7 @@ function createPopupBodySuspense({cache, credential, login, service}) {
       openSeekWait() {
         service.openSeekWait();
       }
-    };
+    }, await prefers.load());
   }
 
   let component = null;
