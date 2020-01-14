@@ -69,14 +69,38 @@ header {
   background-image: linear-gradient(#ffb200, #ff8600);
 
   button {
+    background-color: transparent;
+    color: #fff;
+    cursor: pointer;
+  }
+
+  .btn {
+    float: left;
+    height: 20px;
+    min-width: 20px;
+    margin: 2px 0 0 2px;
+    padding: 0 4px;
+    border: 1px ridge #fff;
+    border-radius: 3px;
+    font-size: 11px;
+
+    + .btn {
+      margin-left: 6px;
+    }
+
+    &:disabled {
+      color: #eee;
+      background-color: #999;
+      cursor: default;
+    }
+  }
+
+  .link {
     float: right;
     padding: 0 4px;
     border: none;
-    background-color: transparent;
-    color: #fff;
     font-size: 12px;
-    line-height: 24px;;
-    cursor: pointer;
+    line-height: 24px;
   }
 }
 
