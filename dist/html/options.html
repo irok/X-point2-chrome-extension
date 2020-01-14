@@ -5,9 +5,14 @@
   <title>X-point2 Chrome Extension</title>
 </head>
 <body>
-  <p>domain：<input type="text" id="domCd" maxlength="10"></p>
-  <p>user：<input type="text" id="user" maxlength="100"></p>
-  <p>password：<input type="password" id="pass" maxlength="50"></p>
+  <section>
+    <p>domain：<input type="text" id="domCd" maxlength="10"></p>
+    <p>user：<input type="text" id="user" maxlength="100"></p>
+    <p>password：<input type="password" id="pass" maxlength="50"></p>
+  </section>
+  <section>
+    <p><input type="checkbox" id="showPendingApprovals">承認待ちの申請を表示する</p>
+  </section>
   <p id="status"></p>
   <button id="save">保存する</button>
   <script src="/js/options.js"></script>
