@@ -8,11 +8,15 @@ export default (props) => (
       bookmarks={props.bookmarks}
       onClickForm={props.openForm}
     />
-    <PendingApprovals
-      count={props.count}
-      wkfls={props.wkfls}
-      onClickForm={props.openForm}
-      onClickMore={props.openSeekWait}
-    />
+    {
+      !props.showPendingApprovals ? null : (
+        <PendingApprovals
+          count={props.count}
+          wkfls={props.wkfls}
+          onClickForm={props.openForm}
+          onClickMore={props.openSeekWait}
+        />
+      )
+    }
   </Fragment>
 );
