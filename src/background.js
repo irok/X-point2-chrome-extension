@@ -61,9 +61,14 @@ async function updatePendingApproval() {
 }
 
 // 最新の情報を取り込む
-async function update() {
+async function update({reset = false} = {}) {
   try {
-    if (await bgPage.login()) {
+    if (reset) {
+      await Promise.all([
+        cache.bookmarks(null),
+        cache.wkfllist(null)
+      ]);
+    } else if (await bgPage.login()) {
       await Promise.all([
         updateBookmarks(),
         updatePendingApproval()
@@ -79,17 +84,8 @@ async function update() {
 
 // イベント設定
 chrome.runtime.onInstalled.addListener(async function({reason}) {
-  // 再インストールしたとき、ローカルキャッシュが残っていることがあるのでクリアする
-  if (reason === 'install') {
-    const {cache} = bgPage;
-    await Promise.all([
-      cache.bookmarks(null),
-      cache.wkfllist(null)
-    ]);
-  } else {
-    // それ以外ならキャッシュを更新してバッジを表示
-    await update();
-  }
+  // 再インストールしたときは、ローカルキャッシュが残っていることがあるのでクリアする
+  await update({reset: reason === 'install'});
 });
 
 chrome.runtime.onStartup.addListener(async function() {
