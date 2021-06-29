@@ -5,7 +5,7 @@ const helpPage = 'https://docs.google.com/document/d/1LeOaRvdgE-9Leo-Tyh3QZfwjuR
 
 export default class Service {
   static url(pathname) {
-    return `https://xpt.gmo-media.jp${pathname}`;
+    return `https://xp011499qu.atledcloud.jp${pathname}`;
   }
 
   constructor(http) {
